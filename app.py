@@ -1,4 +1,9 @@
 import plotly.figure_factory as ff
+from dash import Dash,html
+from dash import dcc
+
+app = Dash(__name__)
+server = app.server
 
 df = [dict(Task="Ener2crowd Finalizzare Accordo (Pricing) ", Start='2023-04-24', Finish='2023-04-27', Resource='Not Started'),
       dict(Task="Rivedere Pricing ", Start='2023-04-26', Finish='2023-05-06', Resource='Incomplete'),
@@ -17,3 +22,11 @@ colors = {'Not Started': 'rgb(220, 0, 0)',
 fig = ff.create_gantt(df, colors=colors, index_col='Resource', show_colorbar=True,
                       group_tasks=True)
 fig.show()
+
+app.layout = html.Div([
+    dcc.Graph(figure=fig)
+])
+
+
+if __name__ == "__main__":
+    app.run_server(debug=True)
